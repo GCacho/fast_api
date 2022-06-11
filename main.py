@@ -29,3 +29,5 @@ def home():     #Path operation function  -> Se aplicará la siguiente función
 @app.post("/person/new")
 def create_person(person: Person = Body(...)): ### ... Significa que es obligatorio.
     return person
+
+#Validaciones: Query Parameters
