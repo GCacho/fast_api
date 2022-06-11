@@ -1,3 +1,6 @@
+Instalar un ambiente virtual y correr los siguientes comandos.
+-pip install fastapi uvicorn -> Instalará el framework fastapi y el servidor unicorn.
+
 Para correr la app hay que poner en comandos 
     -> uvicorn main:app --reload
 
