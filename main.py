@@ -80,12 +80,14 @@ def show_person(
         min_Length=1, 
         max_Length=50,
         title="Person Name",
-        description="This is the person name. It's between 1 and 50 strings" 
+        description="This is the person name. It's between 1 and 50 strings",
+        example="Paola"
         ), 
     age: str = Query(
         ...,
         title="Person Age",
-        description="This is the person's age. It's required"
+        description="This is the person's age. It's required",
+        example=25
         ) #Lo convierte en un campo obligatorio
 ):
     return {name: age}
@@ -93,7 +95,11 @@ def show_person(
 #Validaciones: Path Validations
 @app.get('/person/detail/{person_id}')
 def show_person(
-    person_id: int = Path(..., gt=0) #importamos Path
+    person_id: int = Path(
+        ...,
+        gt=0,
+        example=123
+        ) #importamos Path
 ):
     return{person_id: "It exists!"}
 
@@ -104,7 +110,8 @@ def update_person(
         ...,
         title="Person ID",
         description="This is the person ID",
-        gt=0
+        gt=0,
+        example=123
     ),
     person: Person = Body(...),
 
