@@ -21,13 +21,12 @@ class HairColor(Enum):
     blonde = "blonde"
     red = "red"
 
-class Location(BaseModel):
+class Location(BaseModel): #Herencias aplicadas 
     city: str
     state: str
     country: str
 
-
-class Person(BaseModel):
+class PersonBase(BaseModel):
     first_name: str = Field(
         ...,
         min_Length=1,
@@ -48,30 +47,13 @@ class Person(BaseModel):
     )
     hair_color: Optional[HairColor] = Field(default=None,example="black") #Restringimos a nuestro porpio hair color
     is_married: Optional[bool] = Field(default=None,example="False") #Restringimos con booleanos
+
+class Person(PersonBase):
     password: str = Field(..., min_length=8)
 
 
-class PersonOut(BaseModel): #Es lo mismo que el de person pero le retiramos la contrasena, revisar app.post()
-    first_name: str = Field(
-        ...,
-        min_Length=1,
-        max_Length=50,
-        example="Guillermo"
-        )
-    last_name: str = Field(
-        ...,
-        min_Length=1,
-        max_Length=50,
-        example="Nacho"
-        )
-    age: int = Field(
-        ...,
-        gt=0, #tiene que ser mayor a 0
-        le=115,
-        example="99"
-    )
-    hair_color: Optional[HairColor] = Field(default=None,example="black") #Restringimos a nuestro porpio hair color
-    is_married: Optional[bool] = Field(default=None,example="False") #Restringimos con booleanos
+class PersonOut(PersonBase): #Es lo mismo que el de person pero le retiramos la contrasena, revisar app.post()
+    pass
 
     # class Config:
     #     schema_extra = {
