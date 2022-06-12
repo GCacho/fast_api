@@ -59,3 +59,14 @@ Path operation es una combinación entre los paths y operaciones.
         -negativeint
         -positiveint 
         Ver Más: https://pydantic-docs.helpmanual.io/usage/types/#pydantic-types
+
+-Status Codes 
+    -100 -> Information
+    -200 -> OK
+        -201 -> Created
+        -204 -> No Content
+    -300 -> Redirecting
+    -400 -> Client Error
+        -404 -> No Exists
+        -422 -> Validation Error
+    -500 -> Internal Server Error

@@ -8,6 +8,7 @@ from pydantic import Field
 
 #FastAPI
 from fastapi import FastAPI
+from fastapi import status
 from fastapi import Body, Query, Path
 
 app = FastAPI()
@@ -21,13 +22,12 @@ class HairColor(Enum):
     blonde = "blonde"
     red = "red"
 
-class Location(BaseModel):
+class Location(BaseModel): #Herencias aplicadas 
     city: str
     state: str
     country: str
 
-
-class Person(BaseModel):
+class PersonBase(BaseModel):
     first_name: str = Field(
         ...,
         min_Length=1,
@@ -49,6 +49,13 @@ class Person(BaseModel):
     hair_color: Optional[HairColor] = Field(default=None,example="black") #Restringimos a nuestro porpio hair color
     is_married: Optional[bool] = Field(default=None,example="False") #Restringimos con booleanos
 
+class Person(PersonBase):
+    password: str = Field(..., min_length=8)
+
+
+class PersonOut(PersonBase): #Es lo mismo que el de person pero le retiramos la contrasena, revisar app.post()
+    pass
+
     # class Config:
     #     schema_extra = {
     #         "example":{
@@ -61,19 +68,36 @@ class Person(BaseModel):
     #     }
 
 #El siguiente bloque es un PATH OPERATION: (leer mas en readme.txt)
-@app.get("/")   #Path operation decorator -> Cada vez que alguien abra esta app (/) = Home 
+@app.get( #Path operation decorator -> Cada vez que alguien abra esta app (/) = Home
+    path="/",
+    status_code=status.HTTP_200_OK #Originalmente era |@app.get("/")| el extra es por los status Codes
+    )   
+
+
 def home():     #Path operation function  -> Se aplicará la siguiente función
     return{"Hello":"World"} #regresa un Json
 
 #Request and Response Body
-@app.post("/person/new")
+@app.post(
+    "/person/new", 
+    response_model=PersonOut, #Para la contrasena
+    status_code=status.HTTP_201_CREATED
+    ) 
+
+
 def create_person(
     person: Person = Body(...) # ... Significa que es obligatorio.
 ): 
     return person
 
+
 #Validaciones: Query Parameters
-@app.get("/person/detail")
+@app.get(
+    path="/person/detail",
+    status_code=status.HTTP_200_OK
+    )
+
+    
 def show_person(
     name: Optional[str] = Query( #Restringirlo a que ponga algo y no se pase de 50
         None, 
