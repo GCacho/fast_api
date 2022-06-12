@@ -39,3 +39,23 @@ Path operation es una combinación entre los paths y operaciones.
     -Parámetros:
         -Title : 
         -Description : 
+
+-Tipos de datos especiales:
+    -Clasicos
+        -str 
+        -int 
+        -float
+        -bool
+    -Exóticos
+        -enum -> Para enumerar.
+        -httpurl -> Para trabajar con HTTP 
+        -filepath -> c:/windows/sistem32/432.dll
+        -directorypath -> /mnt/c/somefolder
+        -emailstring -> hola@hola.com : valido / facundo.com : NO valido
+        -paymentcadrnumber -> tarjetas de credito
+        -IPvAnyaddress -> validar si es una IP
+        -negativefloat -> si estan ingresando un flotante negativo 
+        -positivefloat
+        -negativeint
+        -positiveint 
+        Ver Más: https://pydantic-docs.helpmanual.io/usage/types/#pydantic-types

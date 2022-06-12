@@ -1,8 +1,10 @@
 #Python
 from typing import Optional #Es para realizar tipado estatico
+from enum import Enum #Para crear enumeraciones de strings
 
 #PYdantic
 from pydantic import BaseModel #permite crear modelos
+from pydantic import Field
 
 #FastAPI
 from fastapi import FastAPI
@@ -12,6 +14,13 @@ app = FastAPI()
 
 #Models
 
+class HairColor(Enum):
+    white="white"
+    brown = "brown"
+    black = "black"
+    blonde = "blonde"
+    red = "red"
+
 class Location(BaseModel):
     city: str
     state: str
@@ -19,11 +28,23 @@ class Location(BaseModel):
 
 
 class Person(BaseModel):
-    first_name: str
-    last_name: str
-    age: int
-    hair_color: Optional[str] = None
-    is_married: Optional[bool] = None
+    first_name: str = Field(
+        ...,
+        min_Length=1,
+        max_Length=50
+        )
+    last_name: str = Field(
+        ...,
+        min_Length=1,
+        max_Length=50
+        )
+    age: int = Field(
+        ...,
+        gt=0, #tiene que ser mayor a 0
+        le=115
+    )
+    hair_color: Optional[HairColor] = Field(default=None) #Restringimos a nuestro porpio hair color
+    is_married: Optional[bool] = Field(default=None) #Restringimos con booleanos
 
 
 #El siguiente bloque es un PATH OPERATION: (leer mas en readme.txt)
