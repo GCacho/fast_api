@@ -31,21 +31,34 @@ class Person(BaseModel):
     first_name: str = Field(
         ...,
         min_Length=1,
-        max_Length=50
+        max_Length=50,
+        example="Guillermo"
         )
     last_name: str = Field(
         ...,
         min_Length=1,
-        max_Length=50
+        max_Length=50,
+        example="Nacho"
         )
     age: int = Field(
         ...,
         gt=0, #tiene que ser mayor a 0
-        le=115
+        le=115,
+        example="99"
     )
-    hair_color: Optional[HairColor] = Field(default=None) #Restringimos a nuestro porpio hair color
-    is_married: Optional[bool] = Field(default=None) #Restringimos con booleanos
+    hair_color: Optional[HairColor] = Field(default=None,example="black") #Restringimos a nuestro porpio hair color
+    is_married: Optional[bool] = Field(default=None,example="False") #Restringimos con booleanos
 
+    # class Config:
+    #     schema_extra = {
+    #         "example":{
+    #             "first_name":"Guillermo",
+    #             "last_name":"Cacho",
+    #             "age":21,
+    #             "hair_color":"black",
+    #             "is_married":False
+    #         }
+    #     }
 
 #El siguiente bloque es un PATH OPERATION: (leer mas en readme.txt)
 @app.get("/")   #Path operation decorator -> Cada vez que alguien abra esta app (/) = Home 
@@ -94,8 +107,6 @@ def update_person(
         gt=0
     ),
     person: Person = Body(...),
-    location: Location = Body(...)
+
 ):
-    results = person.dict(),
-    results.update(location.dict()) #Es para unir diccionarios
-    return results
+    return person
