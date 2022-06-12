@@ -48,6 +48,30 @@ class Person(BaseModel):
     )
     hair_color: Optional[HairColor] = Field(default=None,example="black") #Restringimos a nuestro porpio hair color
     is_married: Optional[bool] = Field(default=None,example="False") #Restringimos con booleanos
+    password: str = Field(..., min_length=8)
+
+
+class PersonOut(BaseModel): #Es lo mismo que el de person pero le retiramos la contrasena, revisar app.post()
+    first_name: str = Field(
+        ...,
+        min_Length=1,
+        max_Length=50,
+        example="Guillermo"
+        )
+    last_name: str = Field(
+        ...,
+        min_Length=1,
+        max_Length=50,
+        example="Nacho"
+        )
+    age: int = Field(
+        ...,
+        gt=0, #tiene que ser mayor a 0
+        le=115,
+        example="99"
+    )
+    hair_color: Optional[HairColor] = Field(default=None,example="black") #Restringimos a nuestro porpio hair color
+    is_married: Optional[bool] = Field(default=None,example="False") #Restringimos con booleanos
 
     # class Config:
     #     schema_extra = {
@@ -66,7 +90,7 @@ def home():     #Path operation function  -> Se aplicará la siguiente función
     return{"Hello":"World"} #regresa un Json
 
 #Request and Response Body
-@app.post("/person/new")
+@app.post("/person/new", response_model=PersonOut) #Para la contrasena
 def create_person(
     person: Person = Body(...) # ... Significa que es obligatorio.
 ): 
