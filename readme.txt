@@ -23,4 +23,19 @@ Path operation es una combinación entre los paths y operaciones.
 
 -Query Parameter:
     -Request Body: Es el body que envia el cliente a servidor de ida y vuelta.
-    
+
+-Validadiones:
+    -Strings
+        -max_Length : Máximo de letras.
+        -min_Length : Mínimo de letras.
+        -regex : "La navaja suiza del programador" más avanzado
+
+    -Números:
+        -ge : greater or equal than >=
+        -le : less or equal than <=
+        -gt : greater than >
+        -lt : less than <
+
+    -Parámetros:
+        -Title : 
+        -Description : 
