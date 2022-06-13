@@ -115,7 +115,8 @@ def create_person(
 @app.get(
     path="/person/detail",
     status_code=status.HTTP_200_OK,
-    tags=["Persons"]
+    tags=["Persons"],
+    deprecated=True     #Deprecar un path operation (Lo duerme y deja de operar)
     )   
 def show_person(
     name: Optional[str] = Query( #Restringirlo a que ponga algo y no se pase de 50
