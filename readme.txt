@@ -37,8 +37,8 @@ Path operation es una combinación entre los paths y operaciones.
         -lt : less than <
 
     -Parámetros:
-        -Title : 
-        -Description : 
+        -Title : Tienen un titulo
+        -Description : Tienen una descripción sobre lo que restringe el parámetro
 
 -Tipos de datos especiales:
     -Clasicos
@@ -70,3 +70,18 @@ Path operation es una combinación entre los paths y operaciones.
         -404 -> No Exists
         -422 -> Validation Error
     -500 -> Internal Server Error
+
+-Tipos de Entrada de Datos
+    -Path Parameters: Paramátros obligatorios que mandamos mediante URL
+    -Query Parameters: Son los parametros opcionales que mandamos mediante URL
+    -Request Body: Archivos en formato json que envia el cliente mediante la api.
+    -Forms: Son los campos del front-end que traen los datos mediante la api.
+    -Headers: Cabezeras HTTP que pueden venir de servidor a cliente ida y vuelta.
+    -Cookies: Paquetes de datos para poder trackear tu información durante la web
+
+-Files: Sirve para controlar el flujo de entrada de archivos desde el cliente a través de la api
+    -File: 
+    -Upload File:
+        -Filename: Sirve para indicar el nombre del archivo.
+        -Content.type: Indica el formato del archivo.
+        -File: Sirve para acceder al mismo archivo que en el que estás actualmente.
