@@ -80,10 +80,9 @@ class PersonOut(PersonBase): #Es lo mismo que el de person pero le retiramos la 
     path="/",
     status_code=status.HTTP_200_OK #Originalmente era |@app.get("/")| el extra es por los status Codes
     )   
-
-
 def home():     #Path operation function  -> Se aplicará la siguiente función
     return{"Hello":"World"} #regresa un Json
+
 
 #Request and Response Body
 @app.post(
@@ -91,8 +90,6 @@ def home():     #Path operation function  -> Se aplicará la siguiente función
     response_model=PersonOut, #Para la contrasena
     status_code=status.HTTP_201_CREATED
     ) 
-
-
 def create_person(
     person: Person = Body(...) # ... Significa que es obligatorio.
 ): 
@@ -103,9 +100,7 @@ def create_person(
 @app.get(
     path="/person/detail",
     status_code=status.HTTP_200_OK
-    )
-
-    
+    )   
 def show_person(
     name: Optional[str] = Query( #Restringirlo a que ponga algo y no se pase de 50
         None, 
@@ -124,9 +119,10 @@ def show_person(
 ):
     return {name: age}
 
-#Validaciones: Path Validations
 
+#Validaciones: Path Validations
 persons = [1, 2, 3, 4, 5]
+
 
 @app.get('/person/detail/{person_id}')
 def show_person(
@@ -167,6 +163,7 @@ def update_person(
 )
 def login(username: str = Form(...), password: str = Form(...)):
     return LoginOut(username=username)
+
 
 #Cookies and Headers Parameters
 @app.post(
