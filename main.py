@@ -64,16 +64,18 @@ class LoginOut(BaseModel):
 class PersonOut(PersonBase): #Es lo mismo que el de person pero le retiramos la contrasena, revisar app.post()
     pass
 
-    # class Config:
-    #     schema_extra = {
-    #         "example":{
-    #             "first_name":"Guillermo",
-    #             "last_name":"Cacho",
-    #             "age":21,
-    #             "hair_color":"black",
-    #             "is_married":False
-    #         }
-    #     }
+
+# class Config:
+#     schema_extra = {
+#         "example":{
+#             "first_name":"Guillermo",
+#             "last_name":"Cacho",
+#             "age":21,
+#             "hair_color":"black",
+#             "is_married":False
+#         }
+#     }
+
 
 #El siguiente bloque es un PATH OPERATION: (leer mas en readme.txt)
 @app.get( #Path operation decorator -> Cada vez que alguien abra esta app (/) = Home
@@ -86,9 +88,10 @@ def home():     #Path operation function  -> Se aplicará la siguiente función
 
 #Request and Response Body
 @app.post(
-    "/person/new", 
+    "/person/new", # ***1***
     response_model=PersonOut, #Para la contrasena
-    status_code=status.HTTP_201_CREATED
+    status_code=status.HTTP_201_CREATED,
+    tags=["Persons"] #El tag es para acomodar los path operations en el server/docs | se obriene de ***1***
     ) 
 def create_person(
     person: Person = Body(...) # ... Significa que es obligatorio.
@@ -99,7 +102,8 @@ def create_person(
 #Validaciones: Query Parameters
 @app.get(
     path="/person/detail",
-    status_code=status.HTTP_200_OK
+    status_code=status.HTTP_200_OK,
+    tags=["Persons"]
     )   
 def show_person(
     name: Optional[str] = Query( #Restringirlo a que ponga algo y no se pase de 50
@@ -123,8 +127,10 @@ def show_person(
 #Validaciones: Path Validations
 persons = [1, 2, 3, 4, 5]
 
-
-@app.get('/person/detail/{person_id}')
+@app.get(
+    path='/person/detail/{person_id}',
+    tags=["Persons"]
+    )
 def show_person(
     person_id: int = Path(
         ...,
@@ -141,7 +147,10 @@ def show_person(
 
 
 #Validaciones: Request Body
-@app.put("/person/{person_id}")
+@app.put(
+    "/person/{person_id}",
+    tags=["Persons"]
+    )
 def update_person(
     person_id: int = Path(
         ...,
@@ -156,12 +165,17 @@ def update_person(
     return person
 
 
+#Forms
 @app.post(
     path="/login",
     response_model=LoginOut,
-    status_code=status.HTTP_200_OK
+    status_code=status.HTTP_200_OK,
+    tags=["Persons"]
 )
-def login(username: str = Form(...), password: str = Form(...)):
+def login(
+    username: str = Form(...),
+    password: str = Form(...)
+    ):
     return LoginOut(username=username)
 
 
