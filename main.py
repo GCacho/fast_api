@@ -91,11 +91,23 @@ def home():     #Path operation function  -> Se aplicará la siguiente función
     "/person/new", # ***1***
     response_model=PersonOut, #Para la contrasena
     status_code=status.HTTP_201_CREATED,
-    tags=["Persons"] #El tag es para acomodar los path operations en el server/docs | se obriene de ***1***
+    tags=["Persons"], #El tag es para acomodar los path operations en el server/docs | se obriene de ***1***
+    summary="Create Person in the app"
     ) 
 def create_person(
     person: Person = Body(...) # ... Significa que es obligatorio.
 ): 
+    """
+    Create Person      
+    
+    This path operation creates a person in the app and save the information in the database
+
+    Parameters
+        Request body parameter:
+            **person: Person** -> A person model with fist name, last name, age, hair color and marital status.
+
+    Returns a person model with first name, last name, age, hair color and marital status
+    """
     return person
 
 
@@ -121,6 +133,17 @@ def show_person(
         example=25
         ) #Lo convierte en un campo obligatorio
 ):
+    """
+    Validations on person    
+    
+    This path operation adds the validations for the name of the person
+
+    Parameters
+        Request body parameter:
+            **name:Optional[str]** -> Its optional to show the name and to restrict the max leng and min leng 
+
+    Returns the name and the age of the person.
+    """
     return {name: age}
 
 
