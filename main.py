@@ -7,9 +7,9 @@ from pydantic import BaseModel #permite crear modelos
 from pydantic import Field
 
 #FastAPI
-from fastapi import FastAPI
+from fastapi import FastAPI, Form
 from fastapi import status
-from fastapi import Body, Query, Path
+from fastapi import Body, Query, Path, Form
 
 app = FastAPI()
 
@@ -52,6 +52,12 @@ class PersonBase(BaseModel):
 class Person(PersonBase):
     password: str = Field(..., min_length=8)
 
+class LoginOut(BaseModel):
+    username: str = Field(
+        ..., 
+        max_length=20, 
+        example="Guillermo"
+        )
 
 class PersonOut(PersonBase): #Es lo mismo que el de person pero le retiramos la contrasena, revisar app.post()
     pass
@@ -141,3 +147,11 @@ def update_person(
 
 ):
     return person
+
+@app.post(
+    path="/login",
+    response_model=LoginOut,
+    status_code=status.HTTP_200_OK
+)
+def login(username: str = Form(...), password: str = Form(...)):
+    return LoginOut(username=username)
